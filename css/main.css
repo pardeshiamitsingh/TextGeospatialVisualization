@@ -1,0 +1,150 @@
+body {  
+    font-size: 15px;
+    background: #fff;
+    color: #111;
+    font-family: 'courier_primeregular';
+    margin: 0;
+    font: 13px/1.231 arial,helvetica,clean,sans-serif;
+    font-family: Ubuntu;
+    font-size: 13px;
+    line-height: 24px;
+    color: #717478;
+    background-color: #fff;
+} 
+ul {
+    list-style: none;
+    background-color: #42423d; 
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: left;
+    font-size: 20px; 
+    font: inherit; 
+    font-weight: bold;
+    padding: 3px 40px 5px 13px;
+    color: white;
+    background-color: #42423d;
+}
+h4 {
+  font-size: 20px;
+}
+#mainView {
+	clear: both;
+	padding: 0 1em;
+}
+.active {
+    background-color: #b8b8b6;
+    color: #000;
+    font: inherit; 
+    font-size: 20px;  
+    font-weight: bold;
+}
+
+.chart {
+    background: #eee;
+    padding: 3px;
+}
+
+.chart div {
+  width: 0;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 5px;
+  color: white;
+  box-shadow: 2px 2px 2px #666;
+}
+.onHover{
+    background-color: yellow;
+}
+.onHoverOut{
+    background-color: yellow;
+ }
+.container {
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+  background-color: #42423d;
+  width: 100% !important;
+  padding: 1px 0px 1px 9px;
+}
+.wordcloud {
+   background-color: #42423d; 
+}
+.innerdiv {
+  background-color: white;
+  height: 90%;
+}
+div.tooltip {
+    position: absolute;//coz we are going to give teh position.
+    text-align: center;
+    width: 160px;
+    height: 100px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+canvas-svg {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 400px;
+  height: 250px;
+  position: relative;
+}
+
+.states {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+.states-choropleth {
+  fill: #ccc;
+}
+
+#tooltip-container {
+  position: absolute;
+  color: #000;
+  padding: 10px;
+  display: none;
+}
+
+.tooltip_key {
+  font-weight: bold;
+}
+
+.tooltip_value {
+  margin-left: 20px;
+  float: right;
+}
+
+.axis path,
+    .axis line {
+      fill: none;
+      stroke: grey;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+
+    div.tooltip { 
+      position: absolute;     
+      text-align: center;     
+      width: 60px;          
+      height: 28px;         
+      padding: 2px;       
+      font: 12px sans-serif;    
+      background: steelblue;  
+      border: 0px;    
+      border-radius: 8px;     
+      pointer-events: none;     
+    }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Text and Geospatial visualization</title>
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="../js/base/underscore-min.js"></script>
+		<script src="../js/common/commonutil.js"></script>
+		<script src="../js/base/d3.v3.min.js"></script>
+		<script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+		<script src="../js/base/angular.js"></script>
+		<script src="../js/module/lineGraph.js"></script>
+		<script src="../js/module/forceLayout.js"></script>
+		<script src="../js/module/mainApp.js"></script>
+		<script type="text/javascript" src="http://d3js.org/queue.v1.min.js"></script>
+		<script type="text/javascript" src="../js/base/underscore_string.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+	<body ng-app="mainApp">
+		<div id="header">
+			<div class = "container">
+				<p>Text And Geospatial Visualization</p>
+			</div>
+		<div>
+		<div>
+			<div id="tabs" ng-controller="TabCtrl">
+				<ul>
+					<li ng-repeat="tab in tabs" 
+						ng-class="{active:isActiveTab(tab.url)}" 
+						ng-click="onClickTab(tab)" style="font: inherit;color: white;">{{tab.title}}</li>
+				</ul>
+				<div id="mainView">
+					<div ng-include="currentTab"></div>
+				</div>
+			</div>
+			<div id="content"></div>
+			<!-- Creating template for Word Cloud Tab View -->
+			<script type="text/ng-template" id="wordcloud.tpl.html">
+				<div id = "wordCloudFrame">
+					<br>
+					<h4>Top Fifty Popular Words.</h4>
+					<script type="text/javascript">
+						var gParsedJsonArray,
+							gWordArr,
+							gWordCloud,
+							gSortedFiftyArr,
+							gPopularFiftyWords,
+							gPopularFiftyWordsFinal;
+
+						gWordCloud = wordCloud('#wordCloudFrame');
+						showWordCloud(gWordCloud);
+						function showWordCloud(pWordCloud) {
+							//First time on screen gPopularFiftyWordsFinal will be undefined.
+							if(gPopularFiftyWordsFinal == undefined)
+								gWordArr = getWords(pWordCloud);
+							else
+								d3.json("../data/topFiftyWikiNews.json", function(json) {
+									gPopularFiftyWords = json;
+									pWordCloud.update(gPopularFiftyWords);
+								});
+						}
+						
+						// Encapsulate the word cloud functionality
+						function wordCloud(pSelector) {
+							var vFill,
+								vSvg;
+
+							vFill = d3.scale.category20();			
+							//Construct the word cloud's SVG element
+							vSvg = d3.select(pSelector).append("svg")
+									.attr("width", 500)
+									.attr("height", 500)
+									.append("g")
+									.attr("transform", "translate(250,250)");
+											
+							//Draw the word cloud
+							function draw(pWords) {
+								var vCloud = vSvg.selectAll("g text")
+											.data(pWords, function(d) { return d.text; })
+									
+								//Entering words
+								vCloud.enter()
+									.append("text")
+									.style("font-family", "Impact")
+									.style("fill", function(d, i) { return vFill(i); })
+									.attr("text-anchor", "middle")
+									.attr('font-size', 1)
+									.text(function(d) { return d.text; })
+										.on("mouseover", function(d) {
+											//d3.select("#freqCount").attr("innerHTML","onHover");
+										})
+										.on("mouseout", function(d) {
+											//d3.select(this).attr("class","onHoverOut");
+										});
+									
+								//Entering and existing words
+								vCloud.transition()
+									.duration(600)
+									.style("font-size", function(d) { return d.size + "px"; })
+									.attr("transform", function(d) {
+											return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+									})
+									.style("fill-opacity", 1);
+									
+								//Exiting words
+								vCloud.exit()
+									.transition()
+									.duration(200)
+									.style('fill-opacity', 1e-6)
+									.attr('font-size', 1)
+									.remove();
+							}
+							return {
+								update: function(pWords) {
+								    d3.layout.cloud().size([500, 500])
+								        .words(pWords)
+								        .padding(5)
+								        .rotate(function() { return ~~(Math.random() * 2) * 90; })
+								        .font("Impact")
+								        .fontSize(function(d) { return d.size; })
+								        .on("end", draw)
+								        .start();
+								}
+							}
+						}
+
+						function getWords(pWordCloud) {
+							d3.tsv("../data/wikinews.tsv", function(pData) {
+								gPopularFiftyWords = new Array();
+								gPopularFiftyWordsFinal = new Array();
+								gParsedJsonArray = populateDataArray(pData);
+								gSortedFiftyArr = convertToTagData(gParsedJsonArray);
+								gPopularFiftyWords = _.sortBy(gSortedFiftyArr, function(d) { 
+									return d.values
+								});
+								gPopularFiftyWords.reverse();
+
+								for(var i = 0 ; i < 50 ; i++) {
+									gPopularFiftyWordsFinal = gPopularFiftyWordsFinal.concat(gPopularFiftyWords[i]);
+								}
+							});
+
+							d3.json("../data/topFiftyWikiNews.json", function(json) {
+								gPopularFiftyWords = json;
+								pWordCloud.update(gPopularFiftyWords);
+							});
+						}
+  					</script>
+				</div>
+			</script>
+			
+			<!-- Creating template for Graphs Tab View -->
+			<script type="text/ng-template" id="graph.tpl.html">
+				<div style="background-color: #42423d">
+					<div style="float:left;width=30%">
+						<h3 style="text-align :center">
+					    	<label style="color:#42423d;font-size=80px;font-size: 41px;" id="cls"></label>
+						</h3>
+					</div>
+					<div id="line_graph" style="float:right;width=70%"></div>
+					
+				</div>
+					<script type="text/javascript">
+						var gPopularFiftyWordsLineGraph,
+							gParsedJsonArray,
+							gWordArr,
+							gPopularFiftyWordsFinal,
+							gMinYYYYMM,
+							gMaxYYYYMM,
+							gMinDomain,
+							gMaxDomain;
+
+						gPopularFiftyWordsLineGraph = convertToGraphData(gParsedJsonArray, gPopularFiftyWordsFinal);
+						gMinYYYYMM	=	d3.min(gParsedJsonArray, function(d) { return d.yyyymm; });
+						gMaxYYYYMM	=	d3.max(gParsedJsonArray, function(d) { return d.yyyymm; });
+						gMinDomain	=	d3.min(gParsedJsonArray, function(d) { return d.yyyymm; });
+						gMaxDomain	=	d3.max(gParsedJsonArray, function(d) { return d.yyyymm; });
+						gMinDomain = 0 ;
+						gMaxDomain = 50;
+						drawLineGraph(gPopularFiftyWordsLineGraph, gMinYYYYMM, gMaxYYYYMM, gMinDomain, gMaxDomain);
+  					</script>
+  				</div>
+			</script>
+			<!-- Creating template for Relationships Tab View -->
+			<script type="text/ng-template" id="relationships.tpl.html">
+				<div ng-controller="TabCtrl">
+					<br>
+					<div class="col-xs-4">
+					  <input type="text" class="form-control" ng-model="term" placeholder="Enter Search Term">
+					</div>
+					<div class="col-xs-4">
+					  <input type="button" class="btn btn-info" ng-click="showRelationships()" value="Search" ng-disabled="term == null"/>
+					</div>
+			    </div>
+				<div id="viewRelationships"></div>
+			</script>
+		</div>
+	</body>
+</html>
