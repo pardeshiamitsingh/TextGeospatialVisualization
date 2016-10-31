@@ -7,7 +7,7 @@
 	3) Underscore JS - For data manipulation
 	4) Bootstrap JS and CSS - For styling user interface.
 
-#	Github Link:
+#	Github Link: https://github.com/pardeshiamitsingh/TextGeospatialVisualization
 
 #	Link for Web Application: - http://ec524371.ngrok.io/TextGeospatialVisualization/html/ 
 
