@@ -9,7 +9,9 @@
 
 #	Github Link: https://github.com/pardeshiamitsingh/TextGeospatialVisualization
 
-#	Link for Web Application: - http://ec524371.ngrok.io/TextGeospatialVisualization/html/ 
+#	Link for Web Application:  http://ec524371.ngrok.io/TextGeospatialVisualization/html/ 
+
+# 	Video Link:	https://lookback.io/watch/bXrnvExwH5qHE6vZt
 
 #	SnapShots Of the Web Application:
 
@@ -46,4 +48,5 @@
 		search button, application searches the term in given data set and finds all the related terms for the
 		entered term and draws a force layout as shown in the screenshot above.
 		
+
 		
