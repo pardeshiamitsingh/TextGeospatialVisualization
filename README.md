@@ -1,5 +1,5 @@
 
-Project - Text And Geospatial Visualization
+#Project - Text And Geospatial Visualization
 
 #	Technology Stack -
 	1) Angular JS - Enables one page application feature.
@@ -13,12 +13,16 @@ Project - Text And Geospatial Visualization
 
 #	SnapShots Of the Web Application:
 
+## Word cloud
 ![top50popularwords](https://cloud.githubusercontent.com/assets/23156180/19853197/e95c4172-9f8d-11e6-9310-db75d5cba436.JPG)
 
+## Time Vs Frequency (50 popular term)
 ![populartermsgraph](https://cloud.githubusercontent.com/assets/23156180/19853063/f12b96ce-9f8c-11e6-98d2-964238cd6c7a.JPG)
 
+## Time Vs Frequency (Single term)
 ![singleterm](https://cloud.githubusercontent.com/assets/23156180/19853476/6efac1a4-9f8f-11e6-848f-0222aaf438d3.png)
 
+## Relationship 
 ![relationships](https://cloud.githubusercontent.com/assets/23156180/19853248/1de9c072-9f8e-11e6-964a-8b7b585a99ba.JPG)
 
 
