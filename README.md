@@ -9,7 +9,7 @@
 
 #	Github Link: https://github.com/pardeshiamitsingh/TextGeospatialVisualization
 
-#	Link for Web Application:  http://ec524371.ngrok.io/TextGeospatialVisualization/html/ 
+#	Link for Web Application:  https://pardeshiamitsingh.github.io/TextGeospatialVisualization-v1/html/
 
 # 	Video Link:	https://lookback.io/watch/bXrnvExwH5qHE6vZt
 
